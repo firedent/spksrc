@@ -1,18 +1,18 @@
 SPK_NAME = transmission
-SPK_VERS = 3.00
-SPK_REV = 18
+SPK_VERS = 3.00bt
+SPK_REV = 1
 SPK_ICON = src/transmission.png
 
 DEPENDS = cross/busybox cross/$(SPK_NAME)
 
-MAINTAINER = SynoCommunity
+MAINTAINER = SynoCommunity, Firedent
 DESCRIPTION = Transmission is an easy and fast BitTorrent client. You can control it remotely with its web interface or dedicated applications.
 DESCRIPTION_FRE = Transmission est un client BitTorrent simple et rapide. Vous pouvez le contrôler à distance grâce à son interface web ou des applications dédiées.
 DESCRIPTION_SPN = Transmission es un cliente BitTorrent simple y rápido. Puedes controlarlo remotamente mediante su interfaz web o alguna aplicación dedicada.
 RELOAD_UI = yes
 STARTABLE = yes
 DISPLAY_NAME = Transmission
-CHANGELOG = "1. Update to v3.00.<br/>2. Use DSM ca certificates for https"
+CHANGELOG = "1. Add block Thunder<br/>2. Update to v3.00.<br/>3. Use DSM ca certificates for https"
 
 HOMEPAGE = https://transmissionbt.com
 LICENSE  = GPLv2/GPLv3
