@@ -1,6 +1,6 @@
 SPK_NAME = transmission
 SPK_VERS = 3.00bt
-SPK_REV = 1
+SPK_REV = 18
 SPK_ICON = src/transmission.png
 
 DEPENDS = cross/busybox cross/$(SPK_NAME)
