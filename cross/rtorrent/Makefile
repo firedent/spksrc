@@ -1,14 +1,19 @@
 PKG_NAME = rtorrent
-PKG_VERS = 0.9.6
+PKG_VERS = 0.9.8
 PKG_EXT = tar.gz
 PKG_DIST_NAME = v$(PKG_VERS).$(PKG_EXT)
-PKG_DIST_FILE = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = https://github.com/rakshasa/rtorrent/archive
+PKG_DIST_FILE = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
 PKG_DIR = $(PKG_NAME)-$(PKG_VERS)
 
-UNSUPPORTED_ARCHS = powerpc ppc824x ppc854x
+# PPC archs except qoriq
+UNSUPPORTED_ARCHS = $(OLD_PCC_ARCHS)
 
-DEPENDS = cross/ncurses cross/libsigc++ cross/curl cross/libtorrent-rakshasa cross/xmlrpc-c
+# error: template instantiation depth exceeds maximum of 900 (requires gcc >= 4.9)
+# see: https://github.com/rakshasa/rtorrent/issues/223
+UNSUPPORTED_ARCHS += $(ARMv7L_ARCHS)
+
+DEPENDS = cross/ncursesw cross/libsigc++ cross/curl cross/libtorrent-rakshasa cross/xmlrpc-c
 
 HOMEPAGE = https://rakshasa.github.com
 COMMENT  = rTorrent is a BitTorrent client for ncurses, using the libtorrent library. The client and library is written in C++ with emphasis on speed and efficiency, while delivering equivalent features to those found in GUI based clients in an ncurses client.

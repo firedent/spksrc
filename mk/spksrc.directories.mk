@@ -1,4 +1,4 @@
-# * all goes in $(WORK_DIR) : work-arch, or simple work, in the current directory
+# * all goes in $(WORK_DIR) : work-arch (for noarch: work-all or work-dsm7), in the current directory
 # * it will be installed in $(INSTALL_PREFIX) on the target system (/usr/local/transmission)
 # * each source package is unpacked in $(WORK_DIR)
 # * the install target installs files in $(WORK_DIR)/install/, known as $(INSTALL_DIR)
@@ -13,11 +13,14 @@ PWD := $(shell pwd)
 
 BASE_DISTRIB_DIR  = $(PWD)/../../distrib
 PIP_DIR = $(BASE_DISTRIB_DIR)/pip
-TOOLCHAINS_DIR = $(BASE_DISTRIB_DIR)/toolchains
-KERNELS_DIR = $(BASE_DISTRIB_DIR)/kernels
+TOOLCHAIN_DIR = $(BASE_DISTRIB_DIR)/toolchain
+TOOLKIT_DIR = $(BASE_DISTRIB_DIR)/toolkit
+KERNEL_DIR = $(BASE_DISTRIB_DIR)/kernel
 PACKAGES_DIR = $(PWD)/../../packages
 # Default download location, see spksrc.download.mk
+ifeq ($(strip $(DISTRIB_DIR)),)
 DISTRIB_DIR = $(BASE_DISTRIB_DIR)
+endif
 
 ifndef WORK_DIR
 WORK_DIR = $(PWD)/work$(ARCH_SUFFIX)
@@ -40,8 +43,8 @@ endif
 endif
 endif
 
-ifndef KERNEL_DIR
-KERNEL_DIR = $(PWD)/../../kernel/syno-$(ARCH)-$(TCVERSION)/work/source/linux
+ifndef KERNEL_SOURCE_DIR
+KERNEL_SOURCE_DIR = $(PWD)/../../kernel/syno-$(ARCH)-$(TCVERSION)/work/linux
 endif
 
 ifeq ($(strip $(STAGING_INSTALL_PREFIX)),)

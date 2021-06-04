@@ -2,7 +2,7 @@ PKG_NAME = flac
 PKG_VERS = 1.3.2
 PKG_EXT = tar.xz
 PKG_DIST_NAME = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
-PKG_DIST_SITE = http://downloads.sourceforge.net/project/flac/$(PKG_NAME)-src
+PKG_DIST_SITE = https://downloads.sourceforge.net/project/flac/$(PKG_NAME)-src
 PKG_DIR = $(PKG_NAME)-$(PKG_VERS)
 
 DEPENDS = cross/libogg
@@ -20,7 +20,7 @@ CONFIGURE_ARGS = --disable-thorough-tests --disable-doxygen-docs --disable-oggte
 
 include ../../mk/spksrc.cross-cc.mk
 
-ifeq ($(findstring $(ARCH),$(PPC_ARCHES)),$(ARCH))
+ifeq ($(findstring $(ARCH),$(PPC_ARCHS)),$(ARCH))
+# avoid error: AltiVec and SPE instructions cannot coexist
 CONFIGURE_ARGS += --disable-altivec
 endif
-

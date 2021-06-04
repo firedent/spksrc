@@ -5,26 +5,23 @@ PACKAGE="tt-rss"
 DNAME="Tiny Tiny RSS"
 
 # Others
-INSTALL_DIR="/usr/local/${PACKAGE}"
-WEB_DIR="/var/services/web"
+INSTALL_DIR="/var/packages/${PACKAGE}/target"
 PATH="${INSTALL_DIR}/bin:${PATH}"
-BUILDNUMBER="$(/bin/get_key_value /etc.defaults/VERSION buildnumber)"
-USER="$([ "${BUILDNUMBER}" -ge "4418" ] && echo -n http || echo -n nobody)"
-PHP="$([ "${BUILDNUMBER}" -ge "7321" ] && echo -n /usr/local/bin/php56 || echo -n /usr/bin/php)"
-TTRSS="${WEB_DIR}/${PACKAGE}/update.php"
-PID_FILE="${INSTALL_DIR}/var/tt-rss.pid"
+USER="http"
 
+PID_FILE="${INSTALL_DIR}/var/tt-rss.pid"
 
 start_daemon ()
 {
-    start-stop-daemon -S -q -m -b -N 10 -x ${PHP} ${TTRSS} -c ${USER} -u ${USER} -p ${PID_FILE} \
-      -- --daemon 2> /dev/null
+    start-stop-daemon -S -q -m -b -N 10 -a /bin/bash \
+        -c ${USER} -u ${USER} -p ${PID_FILE} --  \
+        -c "${INSTALL_DIR}/bin/tt-rss-daemon"
 }
 
 stop_daemon ()
 {
     start-stop-daemon -K -q -u ${USER} -p ${PID_FILE}
-    wait_for_status 1 20 || start-stop-daemon -K -s 9 -q -p ${PID_FILE}
+    wait_for_status 1 20 || start-stop-daemon -K -s 9 -q -u ${USER} -p ${PID_FILE}
 }
 
 daemon_status ()

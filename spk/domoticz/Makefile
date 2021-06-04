@@ -1,13 +1,13 @@
 SPK_NAME = domoticz
 SPK_VERS = 4.9700
-SPK_REV = 8
+SPK_REV = 9
 SPK_ICON = src/domoticz.png
 DSM_UI_DIR = app
 
 DEPENDS = cross/busybox cross/$(SPK_NAME)
 
 # archs lacking C++11 compiler (arm5 archs, ppc archs except QorIQ)
-UNSUPPORTED_ARCHS = $(ARM5_ARCHES) powerpc ppc824x ppc853x ppc854x
+UNSUPPORTED_ARCHS = $(ARMv5_ARCHS) $(OLD_PPC_ARCHS)
 
 MAINTAINER = Diaoul
 DESCRIPTION = Domoticz is a Home Automation System that lets you monitor and configure various devices like: Lights, Switches, various sensors/meters like Temperature, Rain, Wind, UV, Electra, Gas, Water and much more. Notifications/Alerts can be sent to any mobile device.
@@ -15,9 +15,9 @@ DESCRIPTION_FRE = Domoticz est un système domotique qui vous permet de surveill
 ADMIN_PORT = 8084
 RELOAD_UI = yes
 DISPLAY_NAME = Domoticz
-CHANGELOG = "Update to version 4.9700 \(includes update from python2 to python3 bindings\)"
+CHANGELOG = "Update openssl to 1.1."
 
-HOMEPAGE = http://www.domoticz.com/
+HOMEPAGE = https://www.domoticz.com/
 LICENSE  = GPLv3
 
 INSTALLER_SCRIPT = src/installer.sh

@@ -1,5 +1,5 @@
 PKG_NAME = mutt
-PKG_VERS = 1.13.4
+PKG_VERS = 2.0.6
 PKG_EXT = tar.gz
 PKG_DIST_NAME = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = ftp://ftp.mutt.org/pub/$(PKG_NAME)
@@ -16,10 +16,9 @@ CONFIGURE_ARGS = --with-ssl=openssl --enable-pop --enable-imap --enable-smtp --w
 
 INSTALL_TARGET = mutt_install
 
-
 include ../../mk/spksrc.cross-cc.mk
 
 .PHONY: mutt_install
 mutt_install:
 	$(RUN) $(MAKE) install DESTDIR=$(INSTALL_DIR)
-	cp $(WORK_DIR)/$(PKG_DIR)/doc/Muttrc $(STAGING_INSTALL_PREFIX)/etc/Muttrc
+	cp $(WORK_DIR)/$(PKG_DIR)/doc/Muttrc.head $(STAGING_INSTALL_PREFIX)/etc/Muttrc

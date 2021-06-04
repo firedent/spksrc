@@ -1,6 +1,6 @@
 SPK_NAME = git
-SPK_VERS = 2.26.2
-SPK_REV = 14
+SPK_VERS = 2.31.1
+SPK_REV = 17
 SPK_ICON = src/git.png
 
 DEPENDS = cross/$(SPK_NAME)
@@ -10,9 +10,9 @@ DESCRIPTION = Git is a fast, scalable, distributed revision control system with 
 DESCRIPTION_FRE = Git est un système de gestion de révision rapide, extensible et distribué avec un ensemble de commandes inhabituellement riche qui fournit à la fois des opérations de haut niveau et un accès complet aux structures de bas niveau.
 STARTABLE = no
 DISPLAY_NAME = Git
-CHANGELOG = "1. Update Git to 2.26.2.<br>2. Fix configuration of CA certificates \(use DSM ca-certificates that hopefully will be updated by synology\)."
+CHANGELOG = "Update git to v2.31.1"
 
-HOMEPAGE = http://git-scm.com
+HOMEPAGE = https://git-scm.com
 LICENSE  = GPLv2
 
 SPK_COMMANDS = bin/git bin/git-cvsserver bin/git-receive-pack bin/git-shell bin/git-upload-archive bin/git-upload-pack

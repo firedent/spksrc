@@ -1,6 +1,6 @@
 SPK_NAME = mono
 SPK_VERS = 5.20.1.34
-SPK_REV = 13
+SPK_REV = 17
 SPK_ICON = src/mono.png
 
 DEPENDS = cross/$(SPK_NAME)
@@ -9,10 +9,10 @@ MAINTAINER = hg59
 DESCRIPTION = Cross platform, open source .NET development framework
 DISPLAY_NAME = Mono
 STARTABLE = no
-CHANGELOG = "Update to version 5.20.1.34"
+CHANGELOG = "1. Update to version 5.20.1.34<br/>2. Fix workaround for ARMv5 (88f628x archs)"
 
-HOMEPAGE = http://mono-project.com
-LICENSE  = http://www.mono-project.com/docs/faq/licensing
+HOMEPAGE = https://mono-project.com
+LICENSE  = https://www.mono-project.com/docs/faq/licensing
 
 SERVICE_SETUP = src/service-setup.sh
 

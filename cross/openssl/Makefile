@@ -1,59 +1,56 @@
 PKG_NAME = openssl
-OLD_VERSION = 1.0.2
-PATCH_VERS = n
-PKG_VERS = $(OLD_VERSION)$(PATCH_VERS)
+PKG_VERS = 1.1.1k
 PKG_EXT = tar.gz
 PKG_DIST_NAME = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
-PKG_DIST_SITE = https://www.openssl.org/source/old/$(OLD_VERSION)/
+PKG_DIST_SITE = https://www.openssl.org/source
 PKG_DIR = $(PKG_NAME)-$(PKG_VERS)
 
 DEPENDS = cross/zlib
 
-HOMEPAGE = http://www.openssl.org
-COMMENT  = Compression Library
-LICENSE  = http://www.openssl.org/source/license.html
+HOMEPAGE = https://www.openssl.org
+COMMENT  = TLS/SSL and crypto library.
+LICENSE  = Apache-2.0
 
 CONFIGURE_TARGET = openssl_configure
-
 INSTALL_TARGET = openssl_install
-
-STAGING_INSTALL_PREFIX := $(INSTALL_DIR)
 
 include ../../mk/spksrc.cross-cc.mk
 
+# Use CA certificates provided by DSM
+# OpenSSL data area, such as openssl.cnf, certificates and keys.
+OPENSSL_DATA_DIR=/etc/ssl
+
+# Map ARCH to arch expected by openssl Configure
 OPENSSL_ARCH =
-ifeq ($(findstring $(ARCH),$(x64_ARCHES)),$(ARCH))
+
+ifeq ($(findstring $(ARCH),$(x64_ARCHS)),$(ARCH))
 OPENSSL_ARCH = linux-x86_64
 endif
-ifeq ($(findstring $(ARCH),$(x86_ARCHES)),$(ARCH))
-OPENSSL_ARCH = linux-generic32
+ifeq ($(findstring $(ARCH),$(i686_ARCHS)),$(ARCH))
+OPENSSL_ARCH = linux-x86
 endif
-ifeq ($(findstring $(ARCH),$(ARM5_ARCHES)),$(ARCH))
-OPENSSL_ARCH = synology-armle
+ifeq ($(findstring $(ARCH),$(ARMv5_ARCHS)),$(ARCH))
+OPENSSL_ARCH = linux-armv4 -march=armv5
 endif
-ifeq ($(findstring $(ARCH),$(ARM7_ARCHES)),$(ARCH))
-OPENSSL_ARCH = linux-generic32
+ifeq ($(findstring $(ARCH),$(ARMv7_ARCHS) $(ARMv7L_ARCHS)),$(ARCH))
+OPENSSL_ARCH = linux-armv4
 endif
-ifeq ($(findstring $(ARCH),$(ARM8_ARCHES)),$(ARCH))
+ifeq ($(findstring $(ARCH),$(ARMv8_ARCHS)),$(ARCH))
 OPENSSL_ARCH = linux-aarch64
 endif
-ifeq ($(findstring $(ARCH), powerpc),$(ARCH))
-OPENSSL_ARCH = synology-ppc
+ifeq ($(findstring $(ARCH),$(PPC_ARCHS)),$(ARCH))
+OPENSSL_ARCH = linux-ppc
 endif
-# TODO: validate the best OPENSSL_ARCH for the following archs:
-ifeq ($(findstring $(ARCH), ppc824x ppc853x ppc854x qoriq),$(ARCH))
-OPENSSL_ARCH = linux-generic32
-endif
+
 ifeq ($(strip $(OPENSSL_ARCH)),)
-# unexpected arch. Please add arch to mk/spksrc.common.mk
+# Unexpected CPU architecture. Please add arch to mk/spksrc.archs.mk
 $(error Arch $(ARCH) not expected yet)
 endif
 
-
 .PHONY: openssl_configure
 openssl_configure:
-	$(RUN) ./Configure --openssldir=$(INSTALL_PREFIX) $(OPENSSL_ARCH) zlib-dynamic shared threads
+	$(RUN) ./Configure --openssldir=$(OPENSSL_DATA_DIR) --prefix=$(INSTALL_PREFIX) $(OPENSSL_ARCH) zlib-dynamic shared threads
 
 .PHONY: openssl_install
 openssl_install:
-	$(RUN) $(MAKE) install_sw INSTALL_PREFIX=$(INSTALL_DIR)
+	$(RUN) $(MAKE) install_sw DESTDIR=$(INSTALL_DIR)

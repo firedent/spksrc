@@ -1,10 +1,10 @@
 SPK_NAME = tvheadend
 SPK_SHORT_VERS = 4.3
-SPK_GIT_HASH = ce09077
-SPK_GIT_DATE = 20200713
+SPK_GIT_HASH = 9ed76c0
+SPK_GIT_DATE = 20201011
 SPK_VERS = $(SPK_SHORT_VERS).$(SPK_GIT_DATE)~$(SPK_GIT_HASH)
 TVH_VERS = $(SPK_SHORT_VERS)~$(SPK_GIT_HASH)
-SPK_REV = 24
+SPK_REV = 26
 SPK_ICON = src/tvheadend.png
 DSM_UI_DIR = app
 
@@ -20,13 +20,13 @@ DESCRIPTION = Tvheadend is a TV streaming server and recorder for Linux, FreeBSD
 RELOAD_UI = yes
 DISPLAY_NAME = Tvheadend
 STARTABLE = yes
-CHANGELOG = "1. Update to latest git version ce09077 as of July 13th 2020<br/>2. Enable Intel VAAPI on Intel platforms<br/>3. Disable bintray cache<br/>4. Enable tracing<br/>5. Enable pngquant<br/>6. Enable libtheora<br/>7. Enable fdk-acc<br/>8. Enable re-using FFMPEG media and vaapi shared librairies<br/>9. Update to ffmpeg 4.2.4"
+CHANGELOG = "1. Update to latest git version 9ed76c0 as of October 11th 2020<br/>2. Update openssl to 1.1"
 HOMEPAGE = https://tvheadend.org/
 LICENSE = GPL v3
 
-# PPC_ARCHES except qoriq are not supported
+# PPC archs except qoriq are not supported
 # https://tvheadend.org/issues/5060
-UNSUPPORTED_ARCHS = powerpc ppc824x ppc853x ppc854x
+UNSUPPORTED_ARCHS = $(OLD_PCC_ARCHS)
 
 WIZARDS_DIR = src/wizard/
 CONF_DIR = src/conf/
@@ -46,8 +46,6 @@ POST_STRIP_TARGET = tvheadend_extra_install
 
 BUSYBOX_CONFIG = usrmng
 ENV += BUSYBOX_CONFIG="$(BUSYBOX_CONFIG)"
-
-include ../../mk/spksrc.common.mk
 
 # Reuse ffmpeg libraries
 # Requires to invoke: make [package|publish] ARCH= TCVERSION=
@@ -69,7 +67,7 @@ FFMPEG_LIBS = libavfilter.pc libpostproc.pc libswresample.pc libavresample.pc li
 MEDIA_LIBS = fdk-aac.pc numa.pc ogg.pc opus.pc theoradec.pc theoraenc.pc theora.pc vorbisenc.pc vorbisfile.pc vorbis.pc vpx.pc x264.pc x265.pc
 
 # Add Intel VAAPI libraries on Intel platforms
-ifeq ($(findstring $(ARCH), $(x64_ARCHES)),$(ARCH))
+ifeq ($(findstring $(ARCH),$(x64_ARCHS)),$(ARCH))
 VAAPI_LIBS = libdrm.pc libdrm_intel.pc libkms.pc libva.pc libva-drm.pc pciaccess.pc
 endif
 

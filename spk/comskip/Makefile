@@ -1,9 +1,7 @@
 SPK_NAME = comskip
 SPK_VERS = 0.82.010
-SPK_REV = 4
+SPK_REV = 5
 SPK_ICON = src/comskip.png
-
-REQUIRED_DSM = 5.2
 
 DEPENDS = cross/$(SPK_NAME)
 
@@ -12,18 +10,15 @@ STARTABLE = no
 MAINTAINER = schumi2004
 DESCRIPTION = Comskip is a free mpeg commercial detector. Read the wiki on how to use and configure it.
 DISPLAY_NAME = Comskip
-CHANGELOG = "1. Update to ffmpeg 4.2.4"
+CHANGELOG = "1. Update to ffmpeg 4.3.1"
 
-HOMEPAGE = http://www.kaashoek.com/comskip/
-LICENSE = GNU/LGPL
+HOMEPAGE = https://www.kaashoek.com/comskip/
+LICENSE = LGPL
 HELPURL = https://github.com/SynoCommunity/spksrc/wiki/Comskip
-SUPPORTURL = http://www.kaashoek.com/comskip/
 
 SPK_COMMANDS = bin/comskip
 
 POST_STRIP_TARGET = comskip_extra_install
-
-include ../../mk/spksrc.common.mk
 
 # Reuse FFmpeg libraries
 export FFMPEG_DIR = $(shell pwd)/../ffmpeg/work-$(ARCH)-$(TCVERSION)/install/var/packages/ffmpeg/target
