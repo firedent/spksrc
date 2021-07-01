@@ -1,13 +1,14 @@
 SPK_NAME = synocli-file
-SPK_VERS = 2.2
-SPK_REV = 9
+SPK_VERS = 2.3
+SPK_REV = 10
 SPK_ICON = src/synocli-file.png
 
 DEPENDS = cross/less cross/tree cross/ncdu cross/jdupes cross/rhash cross/mc cross/nano cross/file
 DEPENDS += cross/detox cross/pcre2
 DEPENDS += cross/zstd cross/lzip cross/plzip
 DEPENDS += cross/fdupes
-OPTIONAL_DEPENDS = cross/rmlint cross/rnm cross/micro cross/fzf
+DEPENDS += cross/mg
+OPTIONAL_DEPENDS = cross/rmlint cross/rnm cross/micro cross/fzf cross/ripgrep cross/fd
 
 MAINTAINER = SynoCommunity
 DISPLAY_NAME = SynoCli File Tools
@@ -34,13 +35,21 @@ DEPENDS += cross/micro cross/fzf
 OPTIONAL_DESC := $(OPTIONAL_DESC)", micro (editor), fzf (fuzzy finder)"
 endif
 
+ifneq ($(findstring $(ARCH), $(OLD_PPC_ARCHS)),$(ARCH))
+DEPENDS += cross/ripgrep
+OPTIONAL_DESC := $(OPTIONAL_DESC)", rg \(ripgrep\)"
+DEPENDS += cross/fd
+OPTIONAL_DESC := $(OPTIONAL_DESC)", fd \(fd-find\)"
+endif
+
+
 # activate additional features for pcre2grep and pcre2test
-PCRE2_CLI_FULL=1
+PCRE2_CLI_FULL = 1
 export PCRE2_CLI_FULL
 
-DESCRIPTION = "SynoCli File Tools provides a set of small command-line utilities: less, tree, ncdu, jdupes, fdupes, rhash, mc \(midnight commander\), nano, file, detox, pcre2, zstd, lzip, plzip$(OPTIONAL_DESC)."
+DESCRIPTION = "SynoCli File Tools provides a set of small command-line utilities: less, tree, ncdu, jdupes, fdupes, rhash, mc \(midnight commander\), mg \(emacs-like text editor\), nano, file, detox, pcre2, zstd, lzip, plzip, detox$(OPTIONAL_DESC)."
 STARTABLE = no
-CHANGELOG = "1. Add micro (editor)<br/>2. Add Lzip and Plzip<br/>3. Add fzf (fuzzy finder)<br/>4. Update mc to version 4.8.26<br/>Fix rmlint and zstd."
+CHANGELOG = "1. Add rg (ripgrep).<br/>2. Add fd (fd-find).<br/>3. Add mg (emacs-like text editor)."
 
 HOMEPAGE = https://github.com/SynoCommunity/spksrc/wiki/FAQ-SynoCliFile
 LICENSE  = Each tool is licensed under it's respective license.
@@ -61,6 +70,9 @@ SPK_COMMANDS += bin/lzip bin/plzip
 SPK_COMMANDS += bin/fdupes
 SPK_COMMANDS += bin/micro
 SPK_COMMANDS += bin/fzf
+SPK_COMMANDS += bin/rg
+SPK_COMMANDS += bin/fd
+SPK_COMMANDS += bin/mg
 
 SPK_COMMANDS += bin/rhash
 SPK_COMMANDS += bin/ed2k-link
